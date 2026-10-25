@@ -1,3 +1,4 @@
+import StaffAccessManagement from "./StaffAccessManagement";
 import ChangePassword from "./ChangePassword";
 import ReportsDashboard from "./ReportsDashboard";
 
@@ -362,6 +363,7 @@ export default function RolePortal() {
           <App />
           <ReportsDashboard />
           {user.role === "admin" && <StaffManagement />}
+          {user.role === "admin" && <StaffAccessManagement />}
         </>
       )}
 

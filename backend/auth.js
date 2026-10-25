@@ -68,7 +68,7 @@ function setupAuth(app, pool) {
       });
 
       const result = await pool.query(
-        `SELECT id, username, full_name, role
+        `SELECT id, username, full_name, role, is_active, token_version
          FROM users WHERE id=$1`,
         [payload.sub]
       );
@@ -84,6 +84,18 @@ function setupAuth(app, pool) {
       if (!roles.includes(user.role)) {
         return res.status(403).json({
           error: "Vai trò không hợp lệ"
+        });
+      }
+
+      if (!user.is_active) {
+        return res.status(403).json({
+          error: "Tài khoản đã bị khóa"
+        });
+      }
+
+      if ((payload.version ?? 0) !== user.token_version) {
+        return res.status(401).json({
+          error: "Phiên đăng nhập đã bị thu hồi"
         });
       }
 
@@ -151,7 +163,7 @@ function setupAuth(app, pool) {
 
     try {
       const result = await pool.query(
-        `SELECT id, username, full_name, role, password_hash
+        `SELECT id, username, full_name, role, password_hash, is_active, token_version
          FROM users WHERE username=$1`,
         [username]
       );
@@ -165,8 +177,14 @@ function setupAuth(app, pool) {
         });
       }
 
+      if (!user.is_active) {
+        return res.status(403).json({
+          error: "Tài khoản này đã bị khóa"
+        });
+      }
+
       const token = jwt.sign(
-        {},
+        { version: user.token_version },
         secret,
         {
           algorithm: "HS256",
@@ -214,7 +232,7 @@ function setupAuth(app, pool) {
     async (req, res) => {
       try {
         const result = await pool.query(
-          `SELECT id, full_name, username, role, created_at
+          `SELECT id, full_name, username, role, is_active, created_at
            FROM users ORDER BY id`
         );
 
@@ -329,7 +347,7 @@ function setupAuth(app, pool) {
 
         const updated = await pool.query(
           `UPDATE users
-           SET password_hash=$1
+           SET password_hash=$1, token_version=token_version+1
            WHERE id=$2 AND password_hash=$3
            RETURNING id`,
           [hash, req.user.id, current.password_hash]
@@ -351,6 +369,59 @@ function setupAuth(app, pool) {
 
         return res.status(500).json({
           error: "Không thể đổi mật khẩu"
+        });
+      }
+    }
+  );
+
+
+  // ADMIN KHÓA HOẶC MỞ KHÓA TÀI KHOẢN
+  router.patch(
+    "/users/:id/active",
+    requireAuth,
+    allowRoles("admin"),
+    async (req, res) => {
+      const id = Number(req.params.id);
+      const isActive = req.body?.is_active;
+
+      if (
+        !Number.isSafeInteger(id) ||
+        id <= 0 ||
+        typeof isActive !== "boolean"
+      ) {
+        return res.status(400).json({
+          error: "Thông tin tài khoản không hợp lệ"
+        });
+      }
+
+      try {
+        const result = await pool.query(
+          `UPDATE users
+           SET is_active=$1,
+               token_version=token_version+1
+           WHERE id=$2
+             AND role IN ('manager', 'waiter', 'chef', 'cashier')
+           RETURNING id, username, full_name, role,
+                     is_active, token_version`,
+          [isActive, id]
+        );
+
+        if (!result.rows.length) {
+          return res.status(404).json({
+            error: "Không tìm thấy nhân viên có thể thay đổi trạng thái"
+          });
+        }
+
+        res.json({
+          message: isActive
+            ? "Đã mở khóa tài khoản"
+            : "Đã khóa tài khoản và thu hồi phiên đăng nhập",
+          user: result.rows[0]
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({
+          error: "Không thể cập nhật tài khoản"
         });
       }
     }

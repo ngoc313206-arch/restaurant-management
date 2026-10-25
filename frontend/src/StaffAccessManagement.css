@@ -1,0 +1,140 @@
+
+.staff-access {
+  max-width: 1400px;
+  margin: 30px auto;
+  padding: 28px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  color: #1e293b;
+}
+
+.staff-access-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.staff-access-header h2 {
+  margin: 0 0 8px;
+}
+
+.staff-access-header p {
+  margin: 0;
+  color: #64748b;
+}
+
+.staff-access-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.staff-access-stats article {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.staff-access-stats strong {
+  font-size: 27px;
+  color: #2563eb;
+}
+
+.staff-access-stats span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.staff-access-table-wrapper {
+  overflow-x: auto;
+}
+
+.staff-access-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.staff-access-table th,
+.staff-access-table td {
+  padding: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.staff-access-table th {
+  background: #f8fafc;
+}
+
+.staff-status-active,
+.staff-status-locked {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.staff-status-active {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.staff-status-locked {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+.staff-lock-button {
+  background: #dc2626;
+}
+
+.staff-unlock-button {
+  background: #15803d;
+}
+
+.staff-protected {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.staff-access-error,
+.staff-access-success {
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 18px;
+}
+
+.staff-access-error {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+.staff-access-success {
+  color: #166534;
+  background: #dcfce7;
+}
+
+@media (max-width: 700px) {
+  .staff-access {
+    margin: 15px;
+    padding: 16px;
+  }
+
+  .staff-access-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .staff-access-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
