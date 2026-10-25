@@ -10,11 +10,11 @@ body {
 }
 
 .dashboard {
-  max-width: 1200px;
-  margin: auto;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
   padding: 30px;
 }
-
 header {
   background: #17243b;
   color: white;
