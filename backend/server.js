@@ -1,6 +1,7 @@
 
 const express = require("express");
 const { Pool } = require("pg");
+const createPaymentRouter = require("./paymentRoutes");
 
 const app = express();
 app.use(express.json({ limit: "50kb" }));
@@ -574,6 +575,8 @@ app.patch("/api/orders/:id/status", async (req, res) => {
 // =====================================
 // 8. KHỞI ĐỘNG SERVER
 // =====================================
+
+app.use("/api/payments", createPaymentRouter(pool));
 
 app.listen(3000, "0.0.0.0", () => {
   console.log("Restaurant backend running on port 3000");

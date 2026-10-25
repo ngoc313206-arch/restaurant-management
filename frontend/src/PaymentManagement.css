@@ -1,0 +1,252 @@
+
+.payment-management {
+  margin: 36px 0;
+}
+
+.payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.payment-header h2 {
+  margin: 0 0 8px;
+}
+
+.payment-header p {
+  margin: 0;
+  color: #64748b;
+}
+
+.payment-refresh {
+  background: #334155;
+}
+
+.payment-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.payment-stats article {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment-stats strong {
+  font-size: 25px;
+  color: #2563eb;
+}
+
+.payment-stats span {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.payment-panel,
+.receipt-wrapper {
+  background: white;
+  padding: 26px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 30px;
+}
+
+.payment-panel h3 {
+  margin-top: 0;
+}
+
+.payment-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.payment-field select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  color: #1e293b;
+  font-size: 15px;
+}
+
+.payment-bill {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 22px;
+}
+
+.payment-bill-items > div,
+.receipt-items > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 12px 0;
+}
+
+.payment-bill-total,
+.receipt-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid #cbd5e1;
+  padding-top: 14px;
+  margin-top: 14px;
+  font-size: 19px;
+}
+
+.payment-warning {
+  color: #92400e;
+  background: #fef3c7;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.payment-submit {
+  background: #15803d;
+  padding: 14px 20px;
+  width: 100%;
+}
+
+.payment-history {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.payment-history article {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: white;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.payment-history article p {
+  margin: 0;
+  color: #64748b;
+}
+
+.payment-history-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.payment-history-amount {
+  color: #15803d;
+  font-size: 21px;
+  margin: 8px 0;
+}
+
+.payment-history article button {
+  margin-top: auto;
+}
+
+.payment-error,
+.payment-success {
+  padding: 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.payment-error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.payment-success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.receipt-print {
+  max-width: 480px;
+  margin: 0 auto;
+  color: #111827;
+  background: white;
+  padding: 20px;
+}
+
+.receipt-title {
+  text-align: center;
+}
+
+.receipt-title h2 {
+  margin-bottom: 5px;
+}
+
+.receipt-items {
+  margin: 18px 0;
+}
+
+.receipt-thanks {
+  text-align: center;
+  margin-top: 30px;
+  font-style: italic;
+}
+
+.receipt-print-button {
+  display: block;
+  max-width: 480px;
+  width: 100%;
+  margin: 20px auto 0;
+}
+
+@media (max-width: 700px) {
+  .payment-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .payment-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-panel {
+    padding: 16px;
+  }
+}
+
+/* Chỉ in phần hóa đơn, ẩn giao diện quản lý */
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+
+  #receipt-print,
+  #receipt-print * {
+    visibility: visible !important;
+  }
+
+  #receipt-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: none;
+    padding: 10mm;
+    box-shadow: none;
+  }
+
+  @page {
+    margin: 8mm;
+  }
+}
+

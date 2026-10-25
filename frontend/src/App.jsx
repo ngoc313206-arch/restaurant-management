@@ -1,3 +1,4 @@
+import PaymentManagement from "./PaymentManagement";
 
 import { useEffect, useState } from "react";
 import OrderManagement from "./OrderManagement";
@@ -507,6 +508,7 @@ function App() {
 
       {/* CHỨC NĂNG TẠO ORDER */}
       <OrderManagement onOrderCreated={loadData} />
+      <PaymentManagement onPaymentSuccess={loadData} />
     </div>
   );
 }
