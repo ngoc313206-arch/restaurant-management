@@ -1,3 +1,4 @@
+const createReportsRouter = require("./reportsRoutes");
 
 const express = require("express");
 const { Pool } = require("pg");
@@ -580,6 +581,8 @@ app.patch("/api/orders/:id/status", async (req, res) => {
 // =====================================
 
 app.use("/api/payments", createPaymentRouter(pool));
+
+app.use("/api/reports", createReportsRouter(pool));
 
 app.listen(3000, "0.0.0.0", () => {
   console.log("Restaurant backend running on port 3000");

@@ -12,6 +12,8 @@ COPY auth.js ./
 COPY paymentRoutes.js ./
 COPY createAdmin.js ./
 
+COPY reportsRoutes.js ./
+
 EXPOSE 3000
 
 CMD ["node", "server.js"]

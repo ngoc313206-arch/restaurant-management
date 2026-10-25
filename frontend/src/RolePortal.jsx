@@ -1,3 +1,4 @@
+import ReportsDashboard from "./ReportsDashboard";
 
 import { useEffect, useState } from "react";
 import App from "./App";
@@ -356,6 +357,7 @@ export default function RolePortal() {
       {["admin", "manager"].includes(user.role) && (
         <>
           <App />
+          <ReportsDashboard />
           {user.role === "admin" && <StaffManagement />}
         </>
       )}
