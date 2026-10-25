@@ -1,0 +1,188 @@
+
+.role-app {
+  min-height: 100vh;
+  background: #f1f5f9;
+}
+
+.role-topbar {
+  background: #17243b;
+  color: white;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.role-topbar > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.role-topbar span {
+  color: #cbd5e1;
+  font-size: 13px;
+}
+
+.role-topbar button {
+  background: #475569;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #17243b, #334155);
+  padding: 20px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  padding: 36px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  box-shadow: 0 20px 50px #00000025;
+}
+
+.login-symbol {
+  font-size: 38px;
+  text-align: center;
+}
+
+.login-card h1 {
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+}
+
+.login-card > p {
+  margin: 0 0 10px;
+  color: #64748b;
+  text-align: center;
+}
+
+.login-card label,
+.staff-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.login-card input,
+.staff-form input,
+.staff-form select {
+  padding: 12px;
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  color: #1e293b;
+}
+
+.login-card > button {
+  padding: 14px;
+}
+
+.role-section {
+  width: min(1400px, 100%);
+  margin: 25px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 12px;
+}
+
+.role-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.role-orders {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.role-orders article {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.role-orders article > button {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.role-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 12px 0;
+}
+
+.role-error {
+  padding: 12px;
+  background: #fee2e2;
+  color: #991b1b;
+  border-radius: 8px;
+}
+
+.role-success {
+  padding: 12px;
+  background: #dcfce7;
+  color: #166534;
+  border-radius: 8px;
+}
+
+.staff-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 20px 0 30px;
+}
+
+.staff-form button {
+  grid-column: 1 / -1;
+}
+
+.staff-list {
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+/* Phục vụ chỉ nhìn thấy phần gọi món.
+   Phân quyền thực tế vẫn nằm ở Backend. */
+.role-waiter .kitchen-header,
+.role-waiter .kitchen-stats,
+.role-waiter .kitchen-toolbar,
+.role-waiter .order-history {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .role-topbar {
+    padding: 14px;
+  }
+
+  .role-section {
+    margin: 12px;
+    width: auto;
+    padding: 16px;
+  }
+
+  .staff-form {
+    grid-template-columns: 1fr;
+  }
+}
+

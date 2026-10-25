@@ -1,6 +1,7 @@
 
 const express = require("express");
 const { Pool } = require("pg");
+const setupAuth = require("./auth");
 const createPaymentRouter = require("./paymentRoutes");
 
 const app = express();
@@ -37,6 +38,8 @@ function handleError(res, err, message) {
 // =====================================
 // 1. KIỂM TRA KẾT NỐI
 // =====================================
+
+setupAuth(app, pool);
 
 app.get("/api/health", async (req, res) => {
   try {
