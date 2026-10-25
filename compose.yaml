@@ -14,5 +14,19 @@ services:
       timeout: 5s
       retries: 10
 
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      DB_HOST: db
+      DB_USER: restaurant_user
+      DB_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
+      DB_NAME: restaurant_db
+    depends_on:
+      db:
+        condition: service_healthy
+
 volumes:
   postgres_data:
