@@ -34,7 +34,7 @@ function setupAuth(app, pool) {
 
   const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    limit: 10,
+    limit: 15,
     standardHeaders: "draft-8",
     legacyHeaders: false,
     message: {
@@ -280,6 +280,77 @@ function setupAuth(app, pool) {
         console.error(error);
         res.status(500).json({
           error: "Không thể tạo tài khoản"
+        });
+      }
+    }
+  );
+
+
+  // NHÂN VIÊN TỰ ĐỔI MẬT KHẨU
+  router.post(
+    "/change-password",
+    authLimiter,
+    requireAuth,
+    async (req, res) => {
+      const oldPassword = req.body?.old_password;
+      const newPassword = req.body?.new_password;
+
+      if (
+        typeof oldPassword !== "string" ||
+        typeof newPassword !== "string" ||
+        newPassword.length < 12 ||
+        newPassword.length > 72 ||
+        Buffer.byteLength(newPassword, "utf8") > 72 ||
+        oldPassword === newPassword
+      ) {
+        return res.status(400).json({
+          error: "Mật khẩu mới cần từ 12 ký tự, tối đa 72 byte và phải khác mật khẩu cũ"
+        });
+      }
+
+      try {
+        const result = await pool.query(
+          "SELECT password_hash FROM users WHERE id=$1",
+          [req.user.id]
+        );
+
+        const current = result.rows[0];
+
+        if (!current || !await bcrypt.compare(
+          oldPassword,
+          current.password_hash
+        )) {
+          return res.status(400).json({
+            error: "Mật khẩu hiện tại không đúng"
+          });
+        }
+
+        const hash = await bcrypt.hash(newPassword, 12);
+
+        const updated = await pool.query(
+          `UPDATE users
+           SET password_hash=$1
+           WHERE id=$2 AND password_hash=$3
+           RETURNING id`,
+          [hash, req.user.id, current.password_hash]
+        );
+
+        if (!updated.rows.length) {
+          return res.status(409).json({
+            error: "Mật khẩu vừa được thay đổi. Vui lòng thử lại."
+          });
+        }
+
+        clearSession(res);
+
+        return res.json({
+          message: "Đổi mật khẩu thành công. Vui lòng đăng nhập lại."
+        });
+      } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+          error: "Không thể đổi mật khẩu"
         });
       }
     }

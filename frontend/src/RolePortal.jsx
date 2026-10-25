@@ -1,3 +1,4 @@
+import ChangePassword from "./ChangePassword";
 import ReportsDashboard from "./ReportsDashboard";
 
 import { useEffect, useState } from "react";
@@ -353,6 +354,8 @@ export default function RolePortal() {
 
         <button onClick={logout}>Đăng xuất</button>
       </nav>
+
+      <ChangePassword onChanged={() => setUser(null)} />
 
       {["admin", "manager"].includes(user.role) && (
         <>
